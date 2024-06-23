@@ -1,0 +1,88 @@
+/* Updated CSS for Humidity Component */
+.humidity-container {
+  width: 80%;
+  max-width: 800px; /* Adjusted max-width for better readability */
+  margin: 50px auto; /* Centering horizontally with margin */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #343a40; /* Dark text color */
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ced4da; /* Lighter border */
+  border-radius: 4px;
+}
+
+.btn {
+  width: calc(100% - 20px);
+  background-color: #0c0c0c; /* Updated background color */
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: #0c0c0c; /* Darker shade for hover */
+}
+
+.section-title {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #343a40; /* Dark text color */
+}
+
+.weather-section,
+.results-section {
+  margin-bottom: 30px;
+}
+
+.weather-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap; /* Allows content to wrap */
+}
+
+.weather-text {
+  font-size: 18px;
+  margin: 0;
+  color: #343a40;
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.weather-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.weather-detail {
+  margin-bottom: 5px;
+}
