@@ -44,6 +44,18 @@ function RainfallPrediction() {
       },
     ],
   });
+  const [chartData2, setChartData2] = useState({
+    labels: ["1", "2"],
+    datasets: [
+      {
+        label: "Rainfall (mm)",
+        data: [1, 2],
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        fill: true,
+      },
+    ],
+  });
   const apiService = useMemo(() => new ApiService(), []);
 
   const handleChange = (e) => {
@@ -68,6 +80,16 @@ function RainfallPrediction() {
           {
             ...prevChartData.datasets[0],
             data: response.data.data.map((result) => result.rainfall),
+          },
+        ],
+      }));
+      setChartData2((prevChartData) => ({
+        ...prevChartData,
+        labels: response.data.datasetData.map((result) => `Day ${result.day}`),
+        datasets: [
+          {
+            ...prevChartData.datasets[0],
+            data: response.data.datasetData.map((result) => result.rainfall),
           },
         ],
       }));
@@ -114,10 +136,50 @@ function RainfallPrediction() {
           </div>
         )}
         <div className="results-section">
-          <h2 className="section-title">Simulation Results</h2>
+          <h2 className="section-title">Simulation Weather API Results</h2>
           {results.length > 0 ? (
             <Line
               data={chartData}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: "top",
+                  },
+                  title: {
+                    display: true,
+                    text: "Monte Carlo Monthly Rainfall Prediction",
+                  },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "Rainfall (mm)",
+                    },
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: "Days",
+                    },
+                  },
+                },
+              }}
+            />
+          ) : (
+            <p>
+              No simulation data available. Run the simulation to see results.
+            </p>
+          )}
+        </div>
+
+        <div className="results-section">
+          <h2 className="section-title">Simulation Dataset Results</h2>
+          {results.length > 0 ? (
+            <Line
+              data={chartData2}
               options={{
                 responsive: true,
                 plugins: {
