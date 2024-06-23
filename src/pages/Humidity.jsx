@@ -126,6 +126,120 @@ function Humidity() {
         },
       ],
     },
+    {
+      labels: [],
+      datasets: [
+        {
+          label: "Wind Speed (ms)",
+          data: [],
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          fill: true,
+        },
+        {
+          label: "Temperature (°C)",
+          data: [],
+          borderColor: "rgba(153,102,255,1)",
+          backgroundColor: "rgba(153,102,255,0.2)",
+          fill: true,
+        },
+      ],
+    },
+    {
+      labels: [],
+      datasets: [
+        {
+          label: "Cloud Cover (%)",
+          data: [],
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          fill: true,
+        },
+        {
+          label: "Visibility (miles)",
+          data: [],
+          borderColor: "rgba(153,102,255,1)",
+          backgroundColor: "rgba(153,102,255,0.2)",
+          fill: true,
+        },
+      ],
+    },
+    {
+      labels: [],
+      datasets: [
+        {
+          label: "Pressure (in)",
+          data: [],
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          fill: true,
+        },
+        {
+          label: "Rainfall (mm)",
+          data: [],
+          borderColor: "rgba(153,102,255,1)",
+          backgroundColor: "rgba(153,102,255,0.2)",
+          fill: true,
+        },
+      ],
+    },
+    {
+      labels: [],
+      datasets: [
+        {
+          label: "Dew Point (°C)",
+          data: [],
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          fill: true,
+        },
+        {
+          label: "Humidity (%)",
+          data: [],
+          borderColor: "rgba(153,102,255,1)",
+          backgroundColor: "rgba(153,102,255,0.2)",
+          fill: true,
+        },
+      ],
+    },
+    {
+      labels: [],
+      datasets: [
+        {
+          label: "Wind Speed (ms)",
+          data: [],
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          fill: true,
+        },
+        {
+          label: "Rainfall (mm)",
+          data: [],
+          borderColor: "rgba(153,102,255,1)",
+          backgroundColor: "rgba(153,102,255,0.2)",
+          fill: true,
+        },
+      ],
+    },
+    {
+      labels: [],
+      datasets: [
+        {
+          label: "Cloud Cover (%)",
+          data: [],
+          borderColor: "rgba(75,192,192,1)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          fill: true,
+        },
+        {
+          label: "Temperature (°C)",
+          data: [],
+          borderColor: "rgba(153,102,255,1)",
+          backgroundColor: "rgba(153,102,255,0.2)",
+          fill: true,
+        },
+      ],
+    },
   ]);
 
   const apiService = useMemo(() => new ApiService(), []);
@@ -165,6 +279,14 @@ function Humidity() {
                 ? response.data.data.map((result) => result.temp)
                 : index === 2
                 ? response.data.data.map((result) => result.rainfall)
+                : index === 4 || index === 8
+                ? response.data.data.map((result) => result.wind)
+                : index === 5 || index === 9
+                ? response.data.data.map((result) => result.cloud)
+                : index === 6
+                ? response.data.data.map((result) => result.pressure)
+                : index == 7
+                ? response.data.data.map((result) => result.dew_point)
                 : response.data.data.map((result) => result.humidity),
           },
           {
@@ -172,8 +294,12 @@ function Humidity() {
             data:
               index === 1
                 ? response.data.data.map((result) => result.feels_like)
-                : index === 3
+                : index === 3 || index === 6 || index === 8
                 ? response.data.data.map((result) => result.rainfall)
+                : index === 4 || index === 9
+                ? response.data.data.map((result) => result.temp)
+                : index === 5
+                ? response.data.data.map((result) => result.visibility)
                 : response.data.data.map((result) => result.humidity),
           },
         ],
