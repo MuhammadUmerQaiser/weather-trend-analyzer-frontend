@@ -65,6 +65,10 @@
   margin-top: 20px;
 }
 
+.noDataFound {
+  margin: auto;
+}
+
 .section-title {
   text-align: center;
   margin-bottom: 20px;

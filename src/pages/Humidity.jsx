@@ -13,6 +13,7 @@ import {
   Legend,
 } from "chart.js";
 import "../styles/humidity.css";
+import { ReactComponent as NoDataFound } from "../assets/svg/noDataFound.svg";
 
 ChartJS.register(
   CategoryScale,
@@ -241,6 +242,7 @@ function Humidity() {
       ],
     },
   ]);
+  const [loader, setLoader] = useState(false);
 
   const apiService = useMemo(() => new ApiService(), []);
 
@@ -254,9 +256,10 @@ function Humidity() {
 
   const runSimulation = async () => {
     try {
+      setLoader(true);
       const endpoint = `${process.env.REACT_APP_BACKEND_URL}/humidity-calculation`;
       const response = await apiService.postData(endpoint, params);
-
+      setLoader(false);
       // Debug: log the response data to ensure it's correctly structured
       console.log("Response Data:", response.data);
 
@@ -316,7 +319,16 @@ function Humidity() {
     <>
       <Navbar />
       <div className="humidity-container">
-        <h1 className="title">Monte Carlo Weather Simulation</h1>
+        <h1 className="title">Parametric Comparison</h1>
+        <p className="parametric-container">
+          Here you can see multiple line graph that shows a comparison of
+          different parameters of weather over 10 days in a given city. It’s
+          important to remember that this is a simulation, and actual weather
+          data may vary. Line graphs are useful for visualizing trends over
+          time. In the context of weather, they can be used to see how
+          temperature, humidity, or other weather conditions change throughout a
+          day, week, month, or even a year
+        </p>
         <div className="input-section">
           <div className="form-group">
             <label className="label">City:</label>
@@ -339,13 +351,21 @@ function Humidity() {
             />
           </div>
           <div className="form-group">
-            <button className="btn" onClick={runSimulation}>
-              Run Simulation
-            </button>
+            {loader ? (
+              <div className="loader"></div>
+            ) : (
+              <button className="btn" onClick={runSimulation}>
+                Run Simulation
+              </button>
+            )}
           </div>
         </div>
         <div className="weather-section">
-          <h2 className="section-title">Current Weather:</h2>
+          {results.length > 0 ? (
+            <h2 className="section-title">Current Weather:</h2>
+          ) : (
+            <h2 className="section-title">Run the simulation to see results</h2>
+          )}
           <div className="weather-info">
             {currentWeather.condition && (
               <img
@@ -376,18 +396,27 @@ function Humidity() {
         </div>
 
         {/* Render all charts dynamically */}
-        {chartData.map((chart, index) => (
-          <div key={index} className="results-section">
-            <h2 className="section-title">Chart {index + 1}</h2>
-            {results.length > 0 ? (
-              <Line data={chart} options={chartOptions} />
-            ) : (
-              <p>
-                No simulation data available. Run the simulation to see results.
-              </p>
-            )}
+
+        {results.length > 0 ? (
+          chartData.map((chart, index) => (
+            <div key={index} className="results-section">
+              <h2 className="section-title">Chart {index + 1}</h2>
+              {results.length > 0 ? (
+                <Line data={chart} options={chartOptions} />
+              ) : (
+                <p>
+                  No simulation data available. Run the simulation to see
+                  results.
+                </p>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="noDataFound">
+            <NoDataFound width={200} height={200} />
+            <p className="noDataFoundText">No Data Found</p>
           </div>
-        ))}
+        )}
       </div>
     </>
   );
