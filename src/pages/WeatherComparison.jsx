@@ -168,7 +168,9 @@ const WeatherComparison = () => {
             <option value="Skardu">Skardu</option>
           </select>
         </div>
-        <button className="compare-btn" onClick={fetchWeatherData}>
+        <button className="compare-btn" style={{
+          background:"black"
+        }} onClick={fetchWeatherData}>
           Compare
         </button>
 

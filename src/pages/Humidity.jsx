@@ -376,6 +376,7 @@ function Humidity() {
         </div>
 
         {/* Render all charts dynamically */}
+        <div>
         {chartData.map((chart, index) => (
           <div key={index} className="results-section">
             <h2 className="section-title">Chart {index + 1}</h2>
@@ -388,6 +389,8 @@ function Humidity() {
             )}
           </div>
         ))}
+        </div>
+
       </div>
     </>
   );

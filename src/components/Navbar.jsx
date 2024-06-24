@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "../styles/navbar.css";
 
 function Navbar() {
@@ -7,19 +8,31 @@ function Navbar() {
       <div className="navbar-brand">Weather Trend Analyzer</div>
       <ul className="navbar-nav">
         <li className="nav-item">
-          <a href="/comparison" className="nav-link">
+          <NavLink
+            to="/comparison"
+            className="nav-link"
+            activeClassName="active"
+          >
             Comparison
-          </a>
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a href="/humidity" className="nav-link">
-            Humidity Simulation
-          </a>
+          <NavLink
+            to="/parametric-simulation"
+            className="nav-link"
+            activeClassName="active"
+          >
+            Parametric Simulation
+          </NavLink>
         </li>
         <li className="nav-item">
-          <a href="/rainfall-prediction" className="nav-link">
+          <NavLink
+            to="/rainfall-prediction"
+            className="nav-link"
+            activeClassName="active"
+          >
             Rainfall Prediction
-          </a>
+          </NavLink>
         </li>
         {/* Add more navigation items as needed */}
       </ul>

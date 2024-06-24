@@ -10,7 +10,7 @@ function WebRoute() {
       <Router>
         <Routes>
             <Route path="/" exact Component={Humidity} />
-            <Route path="/humidity" exact Component={Humidity} />
+            <Route path="/parametric-simulation" exact Component={Humidity} />
             <Route path="/comparison" exact Component={WeatherComparison} />
             <Route path="/rainfall-prediction" exact Component={RainfallPrediction} />
         </Routes>
