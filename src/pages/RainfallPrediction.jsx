@@ -14,6 +14,7 @@ import {
   Filler,
 } from "chart.js";
 import "../styles/rainfall.css";
+import { ReactComponent as NoDataFound } from "../assets/svg/noDataFound.svg";
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +28,8 @@ ChartJS.register(
 );
 
 function RainfallPrediction() {
+  const [loader, setLoader] = useState(false);
+
   const [params, setParams] = useState({
     city: "karachi",
   });
@@ -68,8 +71,10 @@ function RainfallPrediction() {
 
   const runSimulation = async () => {
     try {
+      setLoader(true);
       const endpoint = `${process.env.REACT_APP_BACKEND_URL}/monthly-rainfall-prediction`;
       const response = await apiService.postData(endpoint, params);
+      setLoader(false);
 
       console.log("Response Data:", response.data);
       setCurrentWeather(response.data.current);
@@ -115,9 +120,13 @@ function RainfallPrediction() {
               className="input"
             />
           </div>
-          <button className="btn" onClick={runSimulation}>
-            Run Simulation
-          </button>
+          {loader ? (
+            <div className="loader"></div>
+          ) : (
+            <button className="btn" onClick={runSimulation}>
+              Run Simulation
+            </button>
+          )}
         </div>
         {currentWeather.condition && (
           <div className="current-weather">
@@ -169,9 +178,10 @@ function RainfallPrediction() {
               }}
             />
           ) : (
-            <p>
-              No simulation data available. Run the simulation to see results.
-            </p>
+            <div className="noDataFound">
+              <NoDataFound width={200} height={200} />
+              <p className="noDataFoundText">No Data Found</p>
+            </div>
           )}
         </div>
 
@@ -209,9 +219,10 @@ function RainfallPrediction() {
               }}
             />
           ) : (
-            <p>
-              No simulation data available. Run the simulation to see results.
-            </p>
+            <div className="noDataFound">
+              <NoDataFound width={200} height={200} />
+              <p className="noDataFoundText">No Data Found</p>
+            </div>
           )}
         </div>
       </div>

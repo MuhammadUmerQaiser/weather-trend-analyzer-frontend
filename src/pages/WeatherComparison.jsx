@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import "../styles/weather-comparison.css"; // Import CSS for styling
 import Navbar from "../components/Navbar";
+import { ReactComponent as NoDataFound } from "../assets/svg/noDataFound.svg";
 
 // Register required components for Chart.js
 ChartJS.register(
@@ -26,6 +27,7 @@ ChartJS.register(
 );
 
 const WeatherComparison = () => {
+  const [loader, setLoader] = useState(false);
   const [urbanData, setUrbanData] = useState(null);
   const [ruralData, setRuralData] = useState(null);
   const [selectedUrbanArea, setSelectedUrbanArea] = useState("");
@@ -36,12 +38,13 @@ const WeatherComparison = () => {
 
   const fetchWeatherData = async () => {
     try {
+      setLoader(true);
       const endpoint = `${process.env.REACT_APP_BACKEND_URL}/weather-comparison`;
       const response = await apiService.postData(endpoint, {
         rural: selectedRuralArea,
         urban: selectedUrbanArea,
       });
-
+      setLoader(false);
       setUrbanData(response.data.urban);
       setRuralData(response.data.rural);
 
@@ -144,7 +147,7 @@ const WeatherComparison = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar activeName={"WEATHER_COMPARISON"} />
       <div className="weather-comparison-container">
         <h1>Weather Comparison</h1>
         <div className="select-area">
@@ -168,11 +171,20 @@ const WeatherComparison = () => {
             <option value="Skardu">Skardu</option>
           </select>
         </div>
-        <button className="compare-btn" style={{
-          background:"black"
-        }} onClick={fetchWeatherData}>
-          Compare
-        </button>
+
+        {loader ? (
+          <div className="loader"></div>
+        ) : (
+          <button
+            className="compare-btn"
+            style={{
+              background: "black",
+            }}
+            onClick={fetchWeatherData}
+          >
+            Compare
+          </button>
+        )}
 
         {currentBarChartData && (
           <div className="chart-container">
@@ -186,6 +198,12 @@ const WeatherComparison = () => {
           <div className="chart-container">
             <h3>Next Day Weather</h3>
             <Bar data={barChartData} />
+          </div>
+        )}
+        {!currentBarChartData && !barChartData && (
+          <div className="noDataFound">
+            <NoDataFound width={200} height={200} />
+            <p className="noDataFoundText">No Data Found</p>
           </div>
         )}
       </div>

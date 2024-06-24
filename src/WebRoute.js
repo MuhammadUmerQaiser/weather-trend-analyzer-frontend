@@ -9,10 +9,14 @@ function WebRoute() {
     <React.Fragment>
       <Router>
         <Routes>
-            <Route path="/" exact Component={Humidity} />
-            <Route path="/parametric-simulation" exact Component={Humidity} />
-            <Route path="/comparison" exact Component={WeatherComparison} />
-            <Route path="/rainfall-prediction" exact Component={RainfallPrediction} />
+          <Route path="/" exact Component={WeatherComparison} />
+          <Route path="/parametric-simulation" exact Component={Humidity} />
+          <Route path="/comparison" exact Component={WeatherComparison} />
+          <Route
+            path="/rainfall-prediction"
+            exact
+            Component={RainfallPrediction}
+          />
         </Routes>
       </Router>
     </React.Fragment>
